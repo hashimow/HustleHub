@@ -128,3 +128,123 @@ main {
 .btn-orange:hover {
   background: var(--orange-dark);
 }
+
+.hero {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #fff7f4 0%, #ffffff 45%, #f7f8fb 100%);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 70px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: #ffe4dc;
+  color: var(--orange);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.hero-content h1 {
+  font-size: 58px;
+  line-height: 1.05;
+  color: var(--dark);
+  max-width: 700px;
+  margin-bottom: 24px;
+}
+
+.hero-text {
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 590px;
+  margin-bottom: 34px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.hero-visual {
+  min-height: 430px;
+  position: relative;
+  background: var(--dark);
+  border-radius: 30px;
+  padding: 34px;
+  overflow: hidden;
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: var(--orange);
+  border-radius: 50%;
+  top: -70px;
+  right: -60px;
+  opacity: 0.9;
+}
+
+.hero-card {
+  position: relative;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.large-card {
+  padding: 34px;
+  max-width: 360px;
+}
+
+.card-tag {
+  display: inline-block;
+  color: var(--orange);
+  background: #ffe4dc;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.large-card h3 {
+  font-size: 30px;
+  color: var(--dark);
+  margin-bottom: 14px;
+}
+
+.large-card p,
+.small-card p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.small-card {
+  width: 210px;
+  padding: 22px;
+  margin-top: 30px;
+}
+
+.small-card h4 {
+  color: var(--dark);
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.floating-card {
+  position: absolute;
+  right: 32px;
+  bottom: 34px;
+}
