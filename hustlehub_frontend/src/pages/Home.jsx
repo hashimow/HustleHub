@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import Button from "../components/Button";
+import InfoCard from "../components/InfoCard";
+import SearchInput from "../components/SearchInput";
 
 function Home() {
   return (
@@ -16,13 +18,8 @@ function Home() {
             </p>
 
             <div className="hero-buttons">
-              <Link to="/mentors" className="btn btn-orange">
-                Explore Mentors
-              </Link>
-
-              <Link to="/books" className="btn btn-light">
-                Browse Books
-              </Link>
+              <Button to="/mentors">Explore Mentors</Button>
+              <Button to="/books" variant="light">Browse Books</Button>
             </div>
           </div>
 
@@ -57,44 +54,32 @@ function Home() {
             </p>
           </div>
 
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Search mentors, books, skills, or topics..."
-            />
-            <button>Search</button>
-          </div>
+          <SearchInput placeholder="Search mentors, books, skills, or topics..." />
 
           <div className="category-grid">
-            <Link to="/mentors" className="category-card">
-              <span className="category-icon">👨‍💻</span>
-              <h3>Mentors</h3>
-              <p>
-                Discover developers, explore their GitHub profiles, and learn
-                from people already building in tech.
-              </p>
-              <strong>View mentors →</strong>
-            </Link>
+            <InfoCard
+              icon="👨‍💻"
+              title="Mentors"
+              text="Discover developers, explore their GitHub profiles, and learn from people already building in tech."
+              linkText="View mentors →"
+              to="/mentors"
+            />
 
-            <Link to="/books" className="category-card">
-              <span className="category-icon">📚</span>
-              <h3>Books</h3>
-              <p>
-                Browse useful books and learning materials that can help you
-                improve your skills step by step.
-              </p>
-              <strong>Browse books →</strong>
-            </Link>
+            <InfoCard
+              icon="📚"
+              title="Books"
+              text="Browse useful books and learning materials that can help you improve your skills step by step."
+              linkText="Browse books →"
+              to="/books"
+            />
 
-            <Link to="/favorites" className="category-card">
-              <span className="category-icon">⭐</span>
-              <h3>Favorites</h3>
-              <p>
-                Save your favorite mentors and books so you can quickly find
-                them again when you need them.
-              </p>
-              <strong>Open favorites →</strong>
-            </Link>
+            <InfoCard
+              icon="⭐"
+              title="Favorites"
+              text="Save your favorite mentors and books so you can quickly find them again when you need them."
+              linkText="Open favorites →"
+              to="/favorites"
+            />
           </div>
         </div>
       </section>
@@ -103,3 +88,4 @@ function Home() {
 }
 
 export default Home;
+
