@@ -8,3 +8,78 @@ body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
 }
+
+.navbar {
+  height: 76px;
+  padding: 0 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eef0f4;
+  background: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #090d18;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.logo strong {
+  color: #ff3d14;
+}
+
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  background: #ff3d14;
+  color: white;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.nav-links {
+  display: flex;
+  gap: 38px;
+}
+
+.nav-links a {
+  color: #090d18;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 27px 0 21px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a.active {
+  color: #ff3d14;
+  border-bottom-color: #ff3d14;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 18px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-light {
+  color: #090d18;
+  border: 1px solid #dfe3ea;
+}
+
+.btn-orange {
+  color: white;
+  background: #ff3d14;
+}
