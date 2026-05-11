@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import getMentors from "../services/githubApi";
 
 function Mentors() {
@@ -9,6 +11,7 @@ function Mentors() {
   useEffect(() => {
     async function loadMentors() {
       const data = await getMentors();
+
       setMentors(data);
       setLoading(false);
     }
@@ -37,7 +40,9 @@ function Mentors() {
       <div className="container">
         <div className="page-header">
           <p className="section-label">Mentor Discovery</p>
+
           <h1 className="page-title">Find Developer Mentors</h1>
+
           <p className="page-text">
             Search real GitHub developers by name, username, or bio.
           </p>
@@ -58,6 +63,7 @@ function Mentors() {
               <img src={mentor.avatar_url} alt={mentor.login} />
 
               <h3>{mentor.name || mentor.login}</h3>
+
               <p className="mentor-username">@{mentor.login}</p>
 
               <p className="mentor-bio">
@@ -66,12 +72,13 @@ function Mentors() {
 
               <div className="mentor-info">
                 <span>Repos: {mentor.public_repos}</span>
+
                 <span>Followers: {mentor.followers}</span>
               </div>
 
-              <a href={mentor.html_url} target="_blank" rel="noreferrer">
+              <Link to={`/mentors/${mentor.login}`}>
                 View Profile
-              </a>
+              </Link>
             </div>
           ))}
         </div>

@@ -1,7 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Layout from "./components/Layout";
+
 import Home from "./pages/Home";
 import Mentors from "./pages/Mentors";
+import MentorProfile from "./pages/MentorProfile";
 import Books from "./pages/Books";
 import Favorites from "./pages/Favorites";
 import Login from "./pages/Login";
@@ -13,7 +16,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+
           <Route path="mentors" element={<Mentors />} />
+          <Route path="mentors/:username" element={<MentorProfile />} />
+
           <Route path="books" element={<Books />} />
           <Route path="favorites" element={<Favorites />} />
         </Route>
