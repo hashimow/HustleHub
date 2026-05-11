@@ -3,6 +3,7 @@ import getMentors from "../services/githubApi";
 
 function Mentors() {
   const [mentors, setMentors] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,6 +16,18 @@ function Mentors() {
     loadMentors();
   }, []);
 
+  const filteredMentors = mentors.filter((mentor) => {
+    const name = mentor.name || "";
+    const username = mentor.login || "";
+    const bio = mentor.bio || "";
+
+    return (
+      name.toLowerCase().includes(search.toLowerCase()) ||
+      username.toLowerCase().includes(search.toLowerCase()) ||
+      bio.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+
   if (loading) {
     return <h2 className="page-message">Loading mentors...</h2>;
   }
@@ -26,13 +39,21 @@ function Mentors() {
           <p className="section-label">Mentor Discovery</p>
           <h1 className="page-title">Find Developer Mentors</h1>
           <p className="page-text">
-            Explore real GitHub developers and visit their profiles to learn
-            from their work.
+            Search real GitHub developers by name, username, or bio.
           </p>
         </div>
 
+        <div className="mentor-search">
+          <input
+            type="text"
+            placeholder="Search mentors..."
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+
         <div className="mentors-grid">
-          {mentors.map((mentor) => (
+          {filteredMentors.map((mentor) => (
             <div key={mentor.id} className="mentor-card">
               <img src={mentor.avatar_url} alt={mentor.login} />
 
@@ -54,6 +75,10 @@ function Mentors() {
             </div>
           ))}
         </div>
+
+        {filteredMentors.length === 0 && (
+          <p className="empty-text">No mentors found.</p>
+        )}
       </div>
     </section>
   );
