@@ -79,8 +79,11 @@ function Books() {
 
           <h1 className="page-title">Programming Books</h1>
 
+
+
           <p className="page-text">
-            Search programming books and save the ones you like.
+            Browse programming books from Open Library and find learning
+            resources to support your tech journey.
           </p>
         </div>
 
@@ -94,37 +97,45 @@ function Books() {
         </div>
 
         <div className="books-grid">
-          {filteredBooks.map((book) => {
-            const isSaved = favorites.find((item) => item.key === book.key);
+          {books.map((book) => (
+            <div key={book.key} className="book-card">
+              <img
+                src={
+                  book.cover_i
+                    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
+                    : "https://via.placeholder.com/250x340?text=No+Image"
+                }
+                alt={book.title}
+              />
 
-            return (
-              <div key={book.key} className="book-card">
-                <img src={getBookCover(book)} alt={book.title} />
 
-                <div className="book-content">
-                  <h3>{book.title}</h3>
 
-                  <p className="book-author">
-                    {book.author_name ? book.author_name[0] : "Unknown Author"}
-                  </p>
 
-                  <p className="book-year">
-                    First Published: {book.first_publish_year || "N/A"}
-                  </p>
 
-                  <button
-                    className="favorite-btn"
-                    onClick={() => addFavorite(book)}
-                  >
-                    {isSaved ? "Saved" : "Save Favorite"}
-                  </button>
-                </div>
+
+              <div className="book-content">
+                <h3>{book.title}</h3>
+
+                <p className="book-author">
+                  {book.author_name ? book.author_name[0] : "Unknown Author"}
+                </p>
+
+                <p className="book-year">
+                  First Published: {book.first_publish_year || "N/A"}
+                </p>
+
+                <p className="book-editions">
+                  Editions: {book.edition_count || 0}
+
+
+                  
+                </p>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
 
-        {filteredBooks.length === 0 && (
+        {books.length === 0 && (
           <p className="empty-text">No books found.</p>
         )}
       </div>
