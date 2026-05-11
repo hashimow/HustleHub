@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import getBooks from "../services/booksApi";
 
+import Loading from "../components/Loading";
+
 function Books() {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
@@ -79,7 +81,7 @@ function Books() {
   });
 
   if (loading) {
-    return <h2 className="page-message">Loading books...</h2>;
+    return <Loading text="Loading books..." />;
   }
 
   return (
@@ -168,4 +170,4 @@ function Books() {
   );
 }
 
-export default Books;
+export default Books; 

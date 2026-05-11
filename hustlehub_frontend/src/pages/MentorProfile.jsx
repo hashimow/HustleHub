@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+import Loading from "../components/Loading";
+
 function MentorProfile() {
   const { username } = useParams();
 
@@ -31,7 +33,7 @@ function MentorProfile() {
   }, [username]);
 
   if (loading) {
-    return <h2 className="page-message">Loading profile...</h2>;
+    return <Loading text="Loading profile..." />;
   }
 
   if (!mentor || mentor.message === "Not Found") {
@@ -46,23 +48,35 @@ function MentorProfile() {
         </Link>
 
         <div className="profile-card">
-          <img src={mentor.avatar_url} alt={mentor.login} />
+          <img
+            src={mentor.avatar_url}
+            alt={mentor.login}
+          />
 
           <div>
             <h1>{mentor.name || mentor.login}</h1>
 
-            <p className="mentor-username">@{mentor.login}</p>
+            <p className="mentor-username">
+              @{mentor.login}
+            </p>
 
             <p className="profile-bio">
-              {mentor.bio || "This mentor has no bio yet."}
+              {mentor.bio ||
+                "This mentor has no bio yet."}
             </p>
 
             <div className="mentor-info profile-info">
-              <span>Repos: {mentor.public_repos}</span>
+              <span>
+                Repos: {mentor.public_repos}
+              </span>
 
-              <span>Followers: {mentor.followers}</span>
+              <span>
+                Followers: {mentor.followers}
+              </span>
 
-              <span>Following: {mentor.following}</span>
+              <span>
+                Following: {mentor.following}
+              </span>
             </div>
 
             <a
@@ -75,15 +89,21 @@ function MentorProfile() {
           </div>
         </div>
 
-        <h2 className="repo-title">Recent Repositories</h2>
+        <h2 className="repo-title">
+          Recent Repositories
+        </h2>
 
         <div className="repo-grid">
           {repos.map((repo) => (
-            <div key={repo.id} className="repo-card">
+            <div
+              key={repo.id}
+              className="repo-card"
+            >
               <h3>{repo.name}</h3>
 
               <p>
-                {repo.description || "No description available."}
+                {repo.description ||
+                  "No description available."}
               </p>
 
               <a
@@ -96,10 +116,6 @@ function MentorProfile() {
             </div>
           ))}
         </div>
-
-        {repos.length === 0 && (
-          <p className="empty-text">No repositories found.</p>
-        )}
       </div>
     </section>
   );
