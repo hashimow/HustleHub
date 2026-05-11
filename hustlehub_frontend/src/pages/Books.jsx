@@ -4,6 +4,18 @@ import getBooks from "../services/booksApi";
 
 function Books() {
   const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = localStorage.getItem("bookFavorites");
+
+    if (savedFavorites) {
+      return JSON.parse(savedFavorites);
+    }
+
+    return [];
+  });
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,6 +28,44 @@ function Books() {
 
     loadBooks();
   }, []);
+
+  function getBookCover(book) {
+    if (book.cover_i) {
+      return `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
+    }
+
+    return "https://placehold.co/250x340?text=No+Image";
+  }
+
+  function addFavorite(book) {
+    const newFavorite = {
+      key: book.key,
+      title: book.title,
+      author: book.author_name ? book.author_name[0] : "Unknown Author",
+      cover: getBookCover(book),
+    };
+
+    const alreadySaved = favorites.find((item) => item.key === book.key);
+
+    if (alreadySaved) {
+      return;
+    }
+
+    const updatedFavorites = [...favorites, newFavorite];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem("bookFavorites", JSON.stringify(updatedFavorites));
+  }
+
+  const filteredBooks = books.filter((book) => {
+    const title = book.title || "";
+    const author = book.author_name ? book.author_name[0] : "";
+
+    return (
+      title.toLowerCase().includes(search.toLowerCase()) ||
+      author.toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   if (loading) {
     return <h2 className="page-message">Loading books...</h2>;
@@ -35,6 +85,15 @@ function Books() {
             Browse programming books from Open Library and find learning
             resources to support your tech journey.
           </p>
+        </div>
+
+        <div className="mentor-search">
+          <input
+            type="text"
+            placeholder="Search books..."
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
         </div>
 
         <div className="books-grid">
