@@ -732,3 +732,18 @@ button:hover,
 .book-year {
   color: var(--muted);
 }
+
+.favorite-btn {
+  margin-top: 15px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.favorite-btn:hover {
+  opacity: 0.9;
+}
