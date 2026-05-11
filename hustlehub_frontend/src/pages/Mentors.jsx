@@ -6,6 +6,17 @@ import getMentors from "../services/githubApi";
 function Mentors() {
   const [mentors, setMentors] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = localStorage.getItem("mentorFavorites");
+
+    if (savedFavorites) {
+      return JSON.parse(savedFavorites);
+    }
+
+    return [];
+  });
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,6 +29,33 @@ function Mentors() {
 
     loadMentors();
   }, []);
+
+  function addFavorite(mentor) {
+    const newFavorite = {
+      id: mentor.id,
+      login: mentor.login,
+      name: mentor.name || mentor.login,
+      avatar: mentor.avatar_url,
+      bio: mentor.bio || "This mentor has no bio yet.",
+    };
+
+    const alreadySaved = favorites.find(
+      (item) => item.id === mentor.id
+    );
+
+    if (alreadySaved) {
+      return;
+    }
+
+    const updatedFavorites = [...favorites, newFavorite];
+
+    setFavorites(updatedFavorites);
+
+    localStorage.setItem(
+      "mentorFavorites",
+      JSON.stringify(updatedFavorites)
+    );
+  }
 
   const filteredMentors = mentors.filter((mentor) => {
     const name = mentor.name || "";
@@ -41,10 +79,13 @@ function Mentors() {
         <div className="page-header">
           <p className="section-label">Mentor Discovery</p>
 
-          <h1 className="page-title">Find Developer Mentors</h1>
+          <h1 className="page-title">
+            Find Developer Mentors
+          </h1>
 
           <p className="page-text">
-            Search real GitHub developers by name, username, or bio.
+            Search real GitHub developers by name,
+            username, or bio.
           </p>
         </div>
 
@@ -53,38 +94,76 @@ function Mentors() {
             type="text"
             placeholder="Search mentors..."
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) =>
+              setSearch(event.target.value)
+            }
           />
         </div>
 
         <div className="mentors-grid">
-          {filteredMentors.map((mentor) => (
-            <div key={mentor.id} className="mentor-card">
-              <img src={mentor.avatar_url} alt={mentor.login} />
+          {filteredMentors.map((mentor) => {
+            const isSaved = favorites.find(
+              (item) => item.id === mentor.id
+            );
 
-              <h3>{mentor.name || mentor.login}</h3>
+            return (
+              <div
+                key={mentor.id}
+                className="mentor-card"
+              >
+                <img
+                  src={mentor.avatar_url}
+                  alt={mentor.login}
+                />
 
-              <p className="mentor-username">@{mentor.login}</p>
+                <h3>{mentor.name || mentor.login}</h3>
 
-              <p className="mentor-bio">
-                {mentor.bio || "This mentor has no bio yet."}
-              </p>
+                <p className="mentor-username">
+                  @{mentor.login}
+                </p>
 
-              <div className="mentor-info">
-                <span>Repos: {mentor.public_repos}</span>
+                <p className="mentor-bio">
+                  {mentor.bio ||
+                    "This mentor has no bio yet."}
+                </p>
 
-                <span>Followers: {mentor.followers}</span>
+                <div className="mentor-info">
+                  <span>
+                    Repos: {mentor.public_repos}
+                  </span>
+
+                  <span>
+                    Followers: {mentor.followers}
+                  </span>
+                </div>
+
+                <div className="mentor-card-buttons">
+                  <Link
+                    to={`/mentors/${mentor.login}`}
+                  >
+                    View Profile
+                  </Link>
+
+                  <button
+                    className="favorite-btn"
+                    onClick={() =>
+                      addFavorite(mentor)
+                    }
+                  >
+                    {isSaved
+                      ? "Saved"
+                      : "Save Favorite"}
+                  </button>
+                </div>
               </div>
-
-              <Link to={`/mentors/${mentor.login}`}>
-                View Profile
-              </Link>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {filteredMentors.length === 0 && (
-          <p className="empty-text">No mentors found.</p>
+          <p className="empty-text">
+            No mentors found.
+          </p>
         )}
       </div>
     </section>

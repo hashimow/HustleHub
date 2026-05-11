@@ -41,11 +41,15 @@ function Books() {
     const newFavorite = {
       key: book.key,
       title: book.title,
-      author: book.author_name ? book.author_name[0] : "Unknown Author",
+      author: book.author_name
+        ? book.author_name[0]
+        : "Unknown Author",
       cover: getBookCover(book),
     };
 
-    const alreadySaved = favorites.find((item) => item.key === book.key);
+    const alreadySaved = favorites.find(
+      (item) => item.key === book.key
+    );
 
     if (alreadySaved) {
       return;
@@ -54,12 +58,19 @@ function Books() {
     const updatedFavorites = [...favorites, newFavorite];
 
     setFavorites(updatedFavorites);
-    localStorage.setItem("bookFavorites", JSON.stringify(updatedFavorites));
+
+    localStorage.setItem(
+      "bookFavorites",
+      JSON.stringify(updatedFavorites)
+    );
   }
 
   const filteredBooks = books.filter((book) => {
     const title = book.title || "";
-    const author = book.author_name ? book.author_name[0] : "";
+
+    const author = book.author_name
+      ? book.author_name[0]
+      : "";
 
     return (
       title.toLowerCase().includes(search.toLowerCase()) ||
@@ -75,15 +86,17 @@ function Books() {
     <section className="books-page">
       <div className="container">
         <div className="page-header">
-          <p className="section-label">Books Library</p>
+          <p className="section-label">
+            Books Library
+          </p>
 
-          <h1 className="page-title">Programming Books</h1>
-
-
+          <h1 className="page-title">
+            Programming Books
+          </h1>
 
           <p className="page-text">
-            Browse programming books from Open Library and find learning
-            resources to support your tech journey.
+            Search programming books and save the
+            ones you like.
           </p>
         </div>
 
@@ -92,51 +105,63 @@ function Books() {
             type="text"
             placeholder="Search books..."
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) =>
+              setSearch(event.target.value)
+            }
           />
         </div>
 
         <div className="books-grid">
-          {books.map((book) => (
-            <div key={book.key} className="book-card">
-              <img
-                src={
-                  book.cover_i
-                    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-                    : "https://via.placeholder.com/250x340?text=No+Image"
-                }
-                alt={book.title}
-              />
+          {filteredBooks.map((book) => {
+            const isSaved = favorites.find(
+              (item) => item.key === book.key
+            );
 
+            return (
+              <div
+                key={book.key}
+                className="book-card"
+              >
+                <img
+                  src={getBookCover(book)}
+                  alt={book.title}
+                />
 
+                <div className="book-content">
+                  <h3>{book.title}</h3>
 
+                  <p className="book-author">
+                    {book.author_name
+                      ? book.author_name[0]
+                      : "Unknown Author"}
+                  </p>
 
+                  <p className="book-year">
+                    First Published:{" "}
+                    {book.first_publish_year ||
+                      "N/A"}
+                  </p>
 
-
-              <div className="book-content">
-                <h3>{book.title}</h3>
-
-                <p className="book-author">
-                  {book.author_name ? book.author_name[0] : "Unknown Author"}
-                </p>
-
-                <p className="book-year">
-                  First Published: {book.first_publish_year || "N/A"}
-                </p>
-
-                <p className="book-editions">
-                  Editions: {book.edition_count || 0}
-
-
-                  
-                </p>
+                  <button
+                    className="favorite-btn"
+                    onClick={() =>
+                      addFavorite(book)
+                    }
+                  >
+                    {isSaved
+                      ? "Saved"
+                      : "Save Favorite"}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {books.length === 0 && (
-          <p className="empty-text">No books found.</p>
+        {filteredBooks.length === 0 && (
+          <p className="empty-text">
+            No books found.
+          </p>
         )}
       </div>
     </section>

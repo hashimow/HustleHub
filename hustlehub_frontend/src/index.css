@@ -746,6 +746,8 @@ button:hover,
 
 .favorite-btn:hover {
   opacity: 0.9;
+}
+
 .book-content {
   padding-top: 5px;
 }
@@ -762,4 +764,52 @@ button:hover,
 .book-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 18px 35px rgba(15, 23, 42, 0.1);
+}
+
+.favorites-page {
+  padding: 80px 0;
+}
+
+.remove-btn {
+  margin-top: 15px;
+  background: var(--dark);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.remove-btn:hover {
+  opacity: 0.9;
+}
+
+.favorite-btn {
+  margin-top: 12px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.favorite-btn:hover {
+  opacity: 0.9;
+}
+
+.mentor-card-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.mentor-card-buttons a,
+.mentor-card-buttons .favorite-btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
 }
