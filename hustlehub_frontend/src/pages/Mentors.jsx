@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import getMentors from "../services/githubApi";
+import Loading from "../components/Loading";
 
 function Mentors() {
   const [mentors, setMentors] = useState([]);
@@ -39,9 +40,7 @@ function Mentors() {
       bio: mentor.bio || "This mentor has no bio yet.",
     };
 
-    const alreadySaved = favorites.find(
-      (item) => item.id === mentor.id
-    );
+    const alreadySaved = favorites.find((item) => item.id === mentor.id);
 
     if (alreadySaved) {
       return;
@@ -70,7 +69,7 @@ function Mentors() {
   });
 
   if (loading) {
-    return <h2 className="page-message">Loading mentors...</h2>;
+    return <Loading text="Loading mentors..." />;
   }
 
   return (
@@ -79,13 +78,10 @@ function Mentors() {
         <div className="page-header">
           <p className="section-label">Mentor Discovery</p>
 
-          <h1 className="page-title">
-            Find Developer Mentors
-          </h1>
+          <h1 className="page-title">Find Developer Mentors</h1>
 
           <p className="page-text">
-            Search real GitHub developers by name,
-            username, or bio.
+            Search real GitHub developers by name, username, or bio.
           </p>
         </div>
 
@@ -94,65 +90,39 @@ function Mentors() {
             type="text"
             placeholder="Search mentors..."
             value={search}
-            onChange={(event) =>
-              setSearch(event.target.value)
-            }
+            onChange={(event) => setSearch(event.target.value)}
           />
         </div>
 
         <div className="mentors-grid">
           {filteredMentors.map((mentor) => {
-            const isSaved = favorites.find(
-              (item) => item.id === mentor.id
-            );
+            const isSaved = favorites.find((item) => item.id === mentor.id);
 
             return (
-              <div
-                key={mentor.id}
-                className="mentor-card"
-              >
-                <img
-                  src={mentor.avatar_url}
-                  alt={mentor.login}
-                />
+              <div key={mentor.id} className="mentor-card">
+                <img src={mentor.avatar_url} alt={mentor.login} />
 
                 <h3>{mentor.name || mentor.login}</h3>
 
-                <p className="mentor-username">
-                  @{mentor.login}
-                </p>
+                <p className="mentor-username">@{mentor.login}</p>
 
                 <p className="mentor-bio">
-                  {mentor.bio ||
-                    "This mentor has no bio yet."}
+                  {mentor.bio || "This mentor has no bio yet."}
                 </p>
 
                 <div className="mentor-info">
-                  <span>
-                    Repos: {mentor.public_repos}
-                  </span>
-
-                  <span>
-                    Followers: {mentor.followers}
-                  </span>
+                  <span>Repos: {mentor.public_repos}</span>
+                  <span>Followers: {mentor.followers}</span>
                 </div>
 
                 <div className="mentor-card-buttons">
-                  <Link
-                    to={`/mentors/${mentor.login}`}
-                  >
-                    View Profile
-                  </Link>
+                  <Link to={`/mentors/${mentor.login}`}>View Profile</Link>
 
                   <button
                     className="favorite-btn"
-                    onClick={() =>
-                      addFavorite(mentor)
-                    }
+                    onClick={() => addFavorite(mentor)}
                   >
-                    {isSaved
-                      ? "Saved"
-                      : "Save Favorite"}
+                    {isSaved ? "Saved" : "Save Favorite"}
                   </button>
                 </div>
               </div>
@@ -161,9 +131,7 @@ function Mentors() {
         </div>
 
         {filteredMentors.length === 0 && (
-          <p className="empty-text">
-            No mentors found.
-          </p>
+          <p className="empty-text">No mentors found.</p>
         )}
       </div>
     </section>
