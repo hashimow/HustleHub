@@ -732,3 +732,21 @@ button:hover,
 .book-year {
   color: var(--muted);
 }
+
+.book-content {
+  padding-top: 5px;
+}
+
+.book-editions {
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.book-card {
+  transition: 0.2s;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.1);
+}

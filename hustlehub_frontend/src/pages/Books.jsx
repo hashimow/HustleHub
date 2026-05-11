@@ -29,14 +29,17 @@ function Books() {
 
           <h1 className="page-title">Programming Books</h1>
 
+
+
           <p className="page-text">
-            Discover useful books and learning materials for developers.
+            Browse programming books from Open Library and find learning
+            resources to support your tech journey.
           </p>
         </div>
 
         <div className="books-grid">
-          {books.map((book, index) => (
-            <div key={index} className="book-card">
+          {books.map((book) => (
+            <div key={book.key} className="book-card">
               <img
                 src={
                   book.cover_i
@@ -46,20 +49,36 @@ function Books() {
                 alt={book.title}
               />
 
-              <h3>{book.title}</h3>
 
-              <p className="book-author">
-                {book.author_name
-                  ? book.author_name[0]
-                  : "Unknown Author"}
-              </p>
 
-              <p className="book-year">
-                First Published: {book.first_publish_year || "N/A"}
-              </p>
+
+
+
+              <div className="book-content">
+                <h3>{book.title}</h3>
+
+                <p className="book-author">
+                  {book.author_name ? book.author_name[0] : "Unknown Author"}
+                </p>
+
+                <p className="book-year">
+                  First Published: {book.first_publish_year || "N/A"}
+                </p>
+
+                <p className="book-editions">
+                  Editions: {book.edition_count || 0}
+
+
+                  
+                </p>
+              </div>
             </div>
           ))}
         </div>
+
+        {books.length === 0 && (
+          <p className="empty-text">No books found.</p>
+        )}
       </div>
     </section>
   );
