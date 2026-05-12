@@ -76,7 +76,7 @@ git clone <repository-link>
 ## Navigate into the project folder
 
 ```bash
-cd hustle-hub-frontend
+cd hustlehub_frontend
 ```
 
 ## Install dependencies
@@ -117,18 +117,22 @@ VITE_GITHUB_TOKEN=
 ## Frontend Deployment Platform
 - Netlify
 
+## Netlify Deployment Settings
+
+Use the following settings during deployment:
+
+```text
+Base directory: hustlehub_frontend
+Build command: npm run build
+Publish directory: hustlehub_frontend/dist
+```
+
 ## Netlify Deployment Steps
 
 1. Push the project to GitHub
 2. Open Netlify
 3. Import the GitHub repository
-4. Use the following settings:
-
-```text
-Build Command: npm run build
-Publish Directory: dist
-```
-
+4. Add the deployment settings above
 5. Deploy the project
 
 ## React Router Netlify Fix
