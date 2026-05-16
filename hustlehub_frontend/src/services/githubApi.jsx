@@ -3,20 +3,21 @@ const githubUsers = [
   "gaearon",
   "yyx990803",
   "kentcdodds",
-  "tj"
+  "tj",
 ];
 
 async function getMentors() {
   const mentors = [];
 
   for (const username of githubUsers) {
-    const response = await fetch(
-      `https://api.github.com/users/${username}`
-    );
-
+    const response = await fetch(`https://api.github.com/users/${username}`);
     const data = await response.json();
 
-    mentors.push(data);
+    console.log("GitHub user data:", data);
+
+    if (data && data.login && data.avatar_url) {
+      mentors.push(data);
+    }
   }
 
   return mentors;
