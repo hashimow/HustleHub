@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 
 
-const API = "http://127.0.0.1:5000";
 
 function Favorites() {
   const [favorites, setFavorites] = useState([]);
