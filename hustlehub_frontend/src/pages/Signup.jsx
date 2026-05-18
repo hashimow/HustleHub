@@ -2,17 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
-
 function Signup() {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   function handleSignup(e) {
     e.preventDefault();
+    setError("");
 
     fetch(`${API}/api/auth/register`, {
       method: "POST",
@@ -32,11 +33,13 @@ function Signup() {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
 
-          alert("Account created!");
           navigate("/mentors");
         } else {
-          alert(data.error || "Signup failed");
+          setError(data.error || "Signup failed");
         }
+      })
+      .catch(() => {
+        setError("Something went wrong. Please try again.");
       });
   }
 
@@ -48,6 +51,8 @@ function Signup() {
         <p className="auth-text">
           Join Hustle Hub and start saving mentors and books.
         </p>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form className="auth-form" onSubmit={handleSignup}>
           <input
@@ -86,9 +91,7 @@ function Signup() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">
-            Get Started
-          </button>
+          <button type="submit">Get Started</button>
         </form>
       </div>
     </section>

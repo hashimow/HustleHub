@@ -2,15 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   function handleLogin(e) {
     e.preventDefault();
+    setError("");
 
     fetch(`${API}/api/auth/login`, {
       method: "POST",
@@ -28,11 +29,13 @@ function Login() {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
 
-          alert("Login successful!");
           navigate("/mentors");
         } else {
-          alert(data.error || "Login failed");
+          setError(data.error || "Login failed");
         }
+      })
+      .catch(() => {
+        setError("Something went wrong. Please try again.");
       });
   }
 
@@ -44,6 +47,8 @@ function Login() {
         <p className="auth-text">
           Log in to continue exploring mentors and books.
         </p>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form className="auth-form" onSubmit={handleLogin}>
           <input
@@ -64,9 +69,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">
-            Log In
-          </button>
+          <button type="submit">Log In</button>
         </form>
       </div>
     </section>
