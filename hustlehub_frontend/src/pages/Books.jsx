@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import getBooks from "../services/booksApi";
 import Loading from "../components/Loading";
-
-const API = "http://127.0.0.1:5000";
+import API from "../services/api";
 
 function Books() {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("programming");
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
 
+  // Fetch books from Open Library
   useEffect(() => {
-    getBooks().then((data) => {
+    setLoading(true);
+
+    getBooks(query).then((data) => {
       setBooks(data);
       setLoading(false);
     });
-  }, []);
+  }, [query]);
 
+  // Fetch saved favorites
   useEffect(() => {
     if (!token) {
       setFavorites([]);
@@ -64,7 +68,9 @@ function Books() {
         item_id: book.key,
         item_type: "book",
         title: book.title,
-        author: book.author_name ? book.author_name[0] : "Unknown Author",
+        author: book.author_name
+          ? book.author_name[0]
+          : "Unknown Author",
         cover: getBookCover(book),
       }),
     })
@@ -76,15 +82,14 @@ function Books() {
       });
   }
 
-  const filteredBooks = books.filter((book) => {
-    const title = book.title || "";
-    const author = book.author_name ? book.author_name[0] : "";
+  // Search Open Library
+  function handleSearch(e) {
+    e.preventDefault();
 
-    return (
-      title.toLowerCase().includes(search.toLowerCase()) ||
-      author.toLowerCase().includes(search.toLowerCase())
-    );
-  });
+    if (search.trim()) {
+      setQuery(search);
+    }
+  }
 
   if (loading) return <Loading text="Loading books..." />;
 
@@ -93,52 +98,94 @@ function Books() {
       <div className="container">
         <div className="page-header">
           <p className="section-label">Books Library</p>
-          <h1 className="page-title">Programming Books</h1>
+
+          <h1 className="page-title">
+            Find Any Book
+          </h1>
+
           <p className="page-text">
-            Search programming books and save the ones you like.
+            Search books from Open Library and save your favorites.
           </p>
         </div>
 
-        <div className="mentor-search">
+        <form className="mentor-search" onSubmit={handleSearch}>
           <input
             type="text"
-            placeholder="Search books..."
+            placeholder="Search any book..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-        </div>
+
+          <button type="submit">
+            Search
+          </button>
+        </form>
 
         <div className="books-grid">
-          {filteredBooks.map((book) => {
+          {books.map((book) => {
             const isSaved = favorites.find(
-              (f) => f.item_id === book.key && f.type === "book"
+              (f) =>
+                f.item_id === book.key &&
+                f.type === "book"
             );
 
             return (
               <div key={book.key} className="book-card">
-                <img src={getBookCover(book)} alt={book.title} />
+
+                <img
+                  src={getBookCover(book)}
+                  alt={book.title}
+                />
+
                 <div className="book-content">
+
                   <h3>{book.title}</h3>
+
                   <p className="book-author">
-                    {book.author_name ? book.author_name[0] : "Unknown Author"}
+                    {book.author_name
+                      ? book.author_name[0]
+                      : "Unknown Author"}
                   </p>
+
                   <p className="book-year">
-                    First Published: {book.first_publish_year || "N/A"}
+                    First Published:
+                    {" "}
+                    {book.first_publish_year || "N/A"}
                   </p>
-                  <button
-                    className="favorite-btn"
-                    onClick={() => addFavorite(book)}
-                  >
-                    {isSaved ? "Saved" : "Save Favorite"}
-                  </button>
+
+                  <div className="book-card-buttons">
+
+                    <a
+                      href={`https://openlibrary.org${book.key}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="book-link"
+                    >
+                      View Book
+                    </a>
+
+                    <button
+                      className="favorite-btn"
+                      onClick={() => addFavorite(book)}
+                      disabled={!!isSaved}
+                    >
+                      {isSaved
+                        ? "Saved"
+                        : "Save Favorite"}
+                    </button>
+
+                  </div>
+
                 </div>
               </div>
             );
           })}
         </div>
 
-        {filteredBooks.length === 0 && (
-          <p className="empty-text">No books found.</p>
+        {books.length === 0 && (
+          <p className="empty-text">
+            No books found.
+          </p>
         )}
       </div>
     </section>
