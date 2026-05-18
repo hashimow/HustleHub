@@ -987,3 +987,32 @@ img {
     padding: 30px 20px;
   }
 }
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ff7a00;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.nav-user {
+  color:black;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.logout-btn {
+  padding: 8px 14px;
+}
