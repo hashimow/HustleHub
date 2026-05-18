@@ -2,24 +2,27 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import getMentors from "../services/githubApi";
 import Loading from "../components/Loading";
-
-const API = "http://127.0.0.1:5000";
+import API from "../services/api";
 
 function Mentors() {
   const [mentors, setMentors] = useState([]);
   const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("javascript developer");
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
 
+  // Fetch mentors from GitHub
   useEffect(() => {
-    getMentors().then((data) => {
+    setLoading(true);
+    getMentors(query).then((data) => {
       setMentors(data);
       setLoading(false);
     });
-  }, []);
+  }, [query]);
 
+  // Fetch saved favorites from backend
   useEffect(() => {
     if (!token) {
       setFavorites([]);
@@ -41,6 +44,7 @@ function Mentors() {
       });
   }, [token]);
 
+  // Save a mentor to favorites
   function addFavorite(mentor) {
     if (!token) {
       alert("Please login to save favorites!");
@@ -70,17 +74,13 @@ function Mentors() {
       });
   }
 
-  const filteredMentors = mentors.filter((mentor) => {
-    const name = mentor.name || "";
-    const username = mentor.login || "";
-    const bio = mentor.bio || "";
-
-    return (
-      name.toLowerCase().includes(search.toLowerCase()) ||
-      username.toLowerCase().includes(search.toLowerCase()) ||
-      bio.toLowerCase().includes(search.toLowerCase())
-    );
-  });
+  // Search GitHub when form is submitted
+  function handleSearch(e) {
+    e.preventDefault();
+    if (search.trim()) {
+      setQuery(search);
+    }
+  }
 
   if (loading) return <Loading text="Loading mentors..." />;
 
@@ -95,17 +95,18 @@ function Mentors() {
           </p>
         </div>
 
-        <div className="mentor-search">
+        <form className="mentor-search" onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="Search mentors..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-        </div>
+          <button type="submit">Search</button>
+        </form>
 
         <div className="mentors-grid">
-          {filteredMentors.map((mentor) => {
+          {mentors.map((mentor) => {
             const isSaved = favorites.find(
               (f) => f.item_id === String(mentor.id) && f.type === "mentor"
             );
@@ -118,19 +119,18 @@ function Mentors() {
                 <p className="mentor-bio">
                   {mentor.bio || "This mentor has no bio yet."}
                 </p>
-
                 <div className="mentor-info">
                   <span>Repos: {mentor.public_repos}</span>
                   <span>Followers: {mentor.followers}</span>
                 </div>
-
                 <div className="mentor-card-buttons">
                   <Link to={`/mentors/${mentor.login}`}>View Profile</Link>
                   <button
                     className="favorite-btn"
                     onClick={() => addFavorite(mentor)}
+                    disabled={!!isSaved}
                   >
-                    {isSaved ? "Saved" : "Save Favorite"}
+                    {isSaved ? " Saved" : "Save Favorite"}
                   </button>
                 </div>
               </div>
@@ -138,7 +138,7 @@ function Mentors() {
           })}
         </div>
 
-        {filteredMentors.length === 0 && (
+        {mentors.length === 0 && (
           <p className="empty-text">No mentors found.</p>
         )}
       </div>
