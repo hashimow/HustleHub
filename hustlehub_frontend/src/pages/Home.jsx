@@ -1,6 +1,5 @@
 import Button from "../components/Button";
 import InfoCard from "../components/InfoCard";
-import SearchInput from "../components/SearchInput";
 
 function Home() {
   return (
@@ -53,8 +52,6 @@ function Home() {
               favorites when you come back later.
             </p>
           </div>
-
-          <SearchInput placeholder="Search mentors, books, skills, or topics..." />
 
           <div className="category-grid">
             <InfoCard
