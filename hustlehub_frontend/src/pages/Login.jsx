@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API = "http://127.0.0.1:5000";
+import API from "../services/api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,25 +11,32 @@ function Login() {
 
   function handleLogin(e) {
     e.preventDefault();
+    setError("");
 
     fetch(`${API}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.token) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          navigate("/favorites");
+
+          navigate("/mentors");
         } else {
-          setError(data.error);
+          setError(data.error || "Login failed");
         }
       })
-      .catch((err) => console.error(err));
+      .catch(() => {
+        setError("Something went wrong. Please try again.");
+      });
   }
 
   return (
@@ -46,6 +52,8 @@ function Login() {
 
         <form className="auth-form" onSubmit={handleLogin}>
           <input
+            id="email"
+            name="email"
             type="email"
             placeholder="Email Address"
             value={email}
@@ -53,6 +61,8 @@ function Login() {
           />
 
           <input
+            id="password"
+            name="password"
             type="password"
             placeholder="Password"
             value={password}

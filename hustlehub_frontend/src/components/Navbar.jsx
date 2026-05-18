@@ -3,12 +3,13 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const userData = localStorage.getItem("user");
+  const user = userData ? JSON.parse(userData) : null;
 
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+
     navigate("/login");
   }
 
@@ -16,7 +17,10 @@ function Navbar() {
     <nav className="navbar">
       <Link to="/" className="logo">
         <span className="logo-mark">H</span>
-        <span>Hustle <strong>Hub</strong></span>
+
+        <span>
+          Hustle <strong>Hub</strong>
+        </span>
       </Link>
 
       <div className="nav-links">
@@ -27,17 +31,34 @@ function Navbar() {
       </div>
 
       <div className="nav-actions">
-        {token ? (
-          <>
-            <span className="btn btn-light">Hi, {user?.full_name}</span>
-            <button className="btn btn-orange" onClick={handleLogout}>
+        {user ? (
+          <div className="user-menu">
+
+            <div className="user-avatar">
+              {user.username.charAt(0).toUpperCase()}
+            </div>
+
+            <span className="nav-user">
+              {user.username}
+            </span>
+
+            <button
+              className="btn btn-light logout-btn"
+              onClick={handleLogout}
+            >
               Logout
             </button>
-          </>
+
+          </div>
         ) : (
           <>
-            <Link to="/login" className="btn btn-light">Log In</Link>
-            <Link to="/signup" className="btn btn-orange">Get Started</Link>
+            <Link to="/login" className="btn btn-light">
+              Log In
+            </Link>
+
+            <Link to="/signup" className="btn btn-orange">
+              Get Started
+            </Link>
           </>
         )}
       </div>

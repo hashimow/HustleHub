@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API = "http://127.0.0.1:5000";
+import API from "../services/api";
 
 function Signup() {
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,6 +13,7 @@ function Signup() {
 
   function handleSignup(e) {
     e.preventDefault();
+    setError("");
 
     fetch(`${API}/api/auth/register`, {
       method: "POST",
@@ -21,9 +22,9 @@ function Signup() {
       },
       body: JSON.stringify({
         full_name: fullName,
-        username:  fullName.toLowerCase().replace(" ", ""),
-        email:     email,
-        password:  password,
+        username: username,
+        email: email,
+        password: password,
       }),
     })
       .then((res) => res.json())
@@ -31,12 +32,15 @@ function Signup() {
         if (data.token) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          navigate("/favorites");
+
+          navigate("/mentors");
         } else {
-          setError(data.error);
+          setError(data.error || "Signup failed");
         }
       })
-      .catch((err) => console.error(err));
+      .catch(() => {
+        setError("Something went wrong. Please try again.");
+      });
   }
 
   return (
@@ -52,6 +56,8 @@ function Signup() {
 
         <form className="auth-form" onSubmit={handleSignup}>
           <input
+            id="full_name"
+            name="full_name"
             type="text"
             placeholder="Full Name"
             value={fullName}
@@ -59,6 +65,17 @@ function Signup() {
           />
 
           <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+
+          <input
+            id="email"
+            name="email"
             type="email"
             placeholder="Email Address"
             value={email}
@@ -66,6 +83,8 @@ function Signup() {
           />
 
           <input
+            id="password"
+            name="password"
             type="password"
             placeholder="Password"
             value={password}
