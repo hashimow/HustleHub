@@ -935,3 +935,70 @@ img {
     padding: 30px 20px;
   }
 }
+
+body {
+  background-image: url("/images/hustle-bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+main {
+  background: transparent;
+}
+
+.hero,
+.auth-page,
+.mentors-page,
+.books-page,
+.favorites-page,
+.profile-page,
+.home-discovery {
+  background: transparent;
+}
+
+.navbar {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.hero .container,
+.mentors-page .container,
+.books-page .container,
+.favorites-page .container,
+.profile-page .container,
+.auth-container,
+.home-discovery .container {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 24px;
+  padding: 35px;
+}
+
+.hero {
+  padding-top: 80px;
+}
+
+@media (max-width: 700px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .hero .container,
+  .mentors-page .container,
+  .books-page .container,
+  .favorites-page .container,
+  .profile-page .container,
+  .auth-container,
+  .home-discovery .container {
+    padding: 22px;
+  }
+}
