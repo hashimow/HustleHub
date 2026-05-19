@@ -6,6 +6,8 @@ function MentorDashboard() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
+  const [image, setImage] = useState(null);
+
   const [formData, setFormData] = useState({
     bio: "",
     niche: "",
@@ -56,6 +58,41 @@ function MentorDashboard() {
     });
   }
 
+  function handleImageUpload(e) {
+    e.preventDefault();
+
+    if (!image) {
+      setMessage("Please choose an image first.");
+      return;
+    }
+
+    const uploadData = new FormData();
+    uploadData.append("image", image);
+
+    fetch(`${API}/api/auth/upload-profile-image`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: uploadData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.profile_image) {
+          setMessage("Profile image uploaded successfully!");
+
+          if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+          }
+        } else {
+          setMessage(data.error || "Image upload failed.");
+        }
+      })
+      .catch(() => {
+        setMessage("Could not upload image.");
+      });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -70,20 +107,17 @@ function MentorDashboard() {
       .then((res) => res.json())
       .then((data) => {
         if (data.mentor_profile) {
-          const savedUser = JSON.parse(localStorage.getItem("user"));
-
-          if (savedUser) {
-            savedUser.role = "mentor";
-            localStorage.setItem("user", JSON.stringify(savedUser));
+          if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
           }
 
-          setMessage("You are now a mentor!");
+          setMessage("Mentor profile saved successfully!");
 
           setTimeout(() => {
             navigate("/hustle-mentors");
           }, 1000);
         } else {
-          setMessage(data.error || "Something went wrong");
+          setMessage(data.error || "Something went wrong.");
         }
       })
       .catch(() => {
@@ -96,7 +130,11 @@ function MentorDashboard() {
       <div className="container">
         <div className="page-header">
           <p className="section-label">Mentor Application</p>
-          <h1 className="page-title">Create Your Mentor Profile</h1>
+
+          <h1 className="page-title">
+            Create Your Mentor Profile
+          </h1>
+
           <p className="page-text">
             Fill in your mentor details. After saving, your profile will appear
             on the Hustle Hub mentors page.
@@ -105,7 +143,31 @@ function MentorDashboard() {
 
         {message && <p className="success-message">{message}</p>}
 
-        <form className="mentor-dashboard-form" onSubmit={handleSubmit}>
+        <form
+          className="profile-upload-box"
+          onSubmit={handleImageUpload}
+        >
+          <h3>Upload Profile Image</h3>
+
+          <p>
+            Add a profile image so learners can recognize you.
+          </p>
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+
+          <button type="submit">
+            Upload Image
+          </button>
+        </form>
+
+        <form
+          className="mentor-dashboard-form"
+          onSubmit={handleSubmit}
+        >
           <textarea
             name="bio"
             placeholder="Short mentor bio"
@@ -153,6 +215,7 @@ function MentorDashboard() {
             onChange={handleChange}
           />
 
+         
 
           <input
             name="contact_email"
@@ -162,7 +225,9 @@ function MentorDashboard() {
             onChange={handleChange}
           />
 
-          <button type="submit">Apply as Mentor</button>
+          <button type="submit">
+            Apply as Mentor
+          </button>
         </form>
       </div>
     </section>
