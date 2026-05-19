@@ -4,6 +4,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const userData = localStorage.getItem("user");
+
   const user = userData ? JSON.parse(userData) : null;
 
   function handleLogout() {
@@ -15,6 +16,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+
       <Link to="/" className="logo">
         <span className="logo-mark">H</span>
 
@@ -24,14 +26,33 @@ function Navbar() {
       </Link>
 
       <div className="nav-links">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/mentors">Mentors</NavLink>
-        <NavLink to="/books">Books</NavLink>
-        <NavLink to="/favorites">Favorites</NavLink>
+
+        <NavLink to="/">
+          Home
+        </NavLink>
+        
+        <NavLink to="/hustle-mentors">
+          Hustle Mentors
+        </NavLink>
+
+        <NavLink to="/mentors">
+          Mentors
+        </NavLink>
+
+        <NavLink to="/books">
+          Books
+        </NavLink>
+
+        <NavLink to="/favorites">
+          Favorites
+        </NavLink>
+
       </div>
 
       <div className="nav-actions">
+
         {user ? (
+
           <div className="user-menu">
 
             <div className="user-avatar">
@@ -50,7 +71,9 @@ function Navbar() {
             </button>
 
           </div>
+
         ) : (
+
           <>
             <Link to="/login" className="btn btn-light">
               Log In
@@ -60,8 +83,11 @@ function Navbar() {
               Get Started
             </Link>
           </>
+
         )}
+
       </div>
+
     </nav>
   );
 }

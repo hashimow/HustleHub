@@ -1002,3 +1002,528 @@ main {
     padding: 22px;
   }
 }
+
+/* MENTOR DASHBOARD */
+
+.mentor-dashboard-page {
+  padding: 90px 0;
+}
+
+.mentor-dashboard-page .page-header {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  padding: 32px;
+  border-radius: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+}
+
+.mentor-dashboard-form {
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+  padding: 36px;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.mentor-dashboard-form textarea {
+  grid-column: 1 / -1;
+  min-height: 150px;
+  resize: vertical;
+}
+
+.mentor-dashboard-form input,
+.mentor-dashboard-form textarea {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  font-size: 15px;
+  outline: none;
+  background: #ffffff;
+  color: var(--dark);
+  transition: 0.2s ease;
+}
+
+.mentor-dashboard-form input::placeholder,
+.mentor-dashboard-form textarea::placeholder {
+  color: #8b95a5;
+}
+
+.mentor-dashboard-form input:focus,
+.mentor-dashboard-form textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(255, 61, 20, 0.12);
+}
+
+.mentor-dashboard-form button {
+  grid-column: 1 / -1;
+  height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: var(--orange);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.mentor-dashboard-form button:hover {
+  background: var(--orange-dark);
+  transform: translateY(-2px);
+}
+
+.success-message {
+  max-width: 900px;
+  margin-bottom: 20px;
+  background: #dcfce7;
+  color: #166534;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  border: 1px solid #bbf7d0;
+}
+
+@media (max-width: 768px) {
+  .mentor-dashboard-form {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+}
+
+.hustle-mentors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+  gap: 24px;
+  justify-content: center;
+}
+
+.hustle-mentor-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.hustle-mentor-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hustle-mentor-top img {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hustle-mentor-top h3 {
+  margin: 0;
+}
+
+.mentor-rating {
+  font-size: 14px;
+  margin-top: 4px;
+  color: #555;
+}
+
+.small-bio {
+  font-size: 14px;
+  line-height: 1.5;
+  max-height: 64px;
+  overflow: hidden;
+}
+
+.mentor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.mentor-tags span {
+  font-size: 12px;
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.review-box {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.review-box select,
+.review-box textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.review-box textarea {
+  min-height: 65px;
+  resize: vertical;
+}
+
+.review-box button {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.become-mentor-btn {
+  margin-top: 18px;
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
+}
+
+.become-mentor-btn:hover {
+  transform: translateY(-2px);
+  background: #ea580c;
+}
+
+.hustle-mentors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 330px));
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: start;
+}
+
+.hustle-mentor-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  max-width: 330px;
+}
+
+.hustle-mentor-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hustle-mentor-top img {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hustle-mentor-top h3 {
+  margin: 0;
+}
+
+.mentor-rating {
+  font-size: 14px;
+  margin-top: 4px;
+  color: #555;
+}
+
+.small-bio {
+  font-size: 14px;
+  line-height: 1.5;
+  max-height: 64px;
+  overflow: hidden;
+}
+
+.mentor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.mentor-tags span {
+  font-size: 12px;
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.mentor-card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mentor-card-buttons a,
+.mentor-card-buttons button {
+  background: #111827;
+  color: white;
+  text-decoration: none;
+  border: none;
+  padding: 9px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.mentor-card-buttons a:hover,
+.mentor-card-buttons button:hover {
+  background: #f97316;
+}
+
+.review-box {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.review-box select,
+.review-box textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.review-box textarea {
+  min-height: 65px;
+  resize: vertical;
+}
+
+.review-box button {
+  background: #f97316;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.review-box button:hover {
+  background: #ea580c;
+}
+
+.become-mentor-btn {
+  margin-top: 18px;
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
+}
+
+.become-mentor-btn:hover {
+  background: #ea580c;
+  transform: translateY(-2px);
+}
+
+.hustle-mentors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 330px));
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: start;
+}
+
+.hustle-mentor-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  max-width: 330px;
+}
+
+.hustle-mentor-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hustle-mentor-top img {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hustle-mentor-top h3 {
+  margin: 0;
+}
+
+.mentor-rating {
+  font-size: 14px;
+  margin-top: 4px;
+  color: #555;
+}
+
+.small-bio {
+  font-size: 14px;
+  line-height: 1.5;
+  max-height: 64px;
+  overflow: hidden;
+}
+
+.mentor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.mentor-tags span {
+  font-size: 12px;
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.mentor-card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mentor-card-buttons a,
+.mentor-card-buttons button {
+  background: #111827;
+  color: white;
+  text-decoration: none;
+  border: none;
+  padding: 9px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.mentor-card-buttons a:hover,
+.mentor-card-buttons button:hover {
+  background: #f97316;
+}
+
+.edit-profile-btn {
+  background: #2563eb !important;
+}
+
+.edit-profile-btn:hover {
+  background: #1d4ed8 !important;
+}
+
+.review-box {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.review-box select,
+.review-box textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.review-box textarea {
+  min-height: 65px;
+  resize: vertical;
+}
+
+.review-box button {
+  background: #f97316;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.review-box button:hover {
+  background: #ea580c;
+}
+
+.mentor-reviews {
+  margin-top: 16px;
+}
+
+.mentor-reviews h4 {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.single-review {
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.review-user {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.review-stars {
+  margin-bottom: 6px;
+}
+
+.review-comment {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.no-reviews {
+  font-size: 14px;
+  color: #666;
+}
+
+.hustle-page-text {
+  color: #1f2937;
+  font-weight: 600;
+  opacity: 1;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55);
+}
+
+.mentor-top-info {
+  flex: 1;
+}
+
+.mentor-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mentor-name-row h3 {
+  margin: 0;
+}
+
+.edit-mini-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-mini-btn:hover {
+  background: #1d4ed8;
+}

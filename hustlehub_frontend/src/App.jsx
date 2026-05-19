@@ -5,6 +5,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Mentors from "./pages/Mentors";
 import MentorProfile from "./pages/MentorProfile";
+import MentorDashboard from "./pages/MentorDashboard";
+import HustleMentors from "./pages/HustleMentors";
 import Books from "./pages/Books";
 import Favorites from "./pages/Favorites";
 import Login from "./pages/Login";
@@ -19,6 +21,9 @@ function App() {
 
           <Route path="mentors" element={<Mentors />} />
           <Route path="mentors/:username" element={<MentorProfile />} />
+
+          <Route path="hustle-mentors" element={<HustleMentors />} />
+          <Route path="mentor-dashboard" element={<MentorDashboard />} />
 
           <Route path="books" element={<Books />} />
           <Route path="favorites" element={<Favorites />} />
