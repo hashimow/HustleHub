@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import getMentors from "../services/githubApi";
 import Loading from "../components/Loading";
 import API from "../services/api";
@@ -11,18 +11,18 @@ function Mentors() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // Fetch mentors from GitHub
   useEffect(() => {
     setLoading(true);
+
     getMentors(query).then((data) => {
       setMentors(data);
       setLoading(false);
     });
   }, [query]);
 
-  // Fetch saved favorites from backend
   useEffect(() => {
     if (!token) {
       setFavorites([]);
@@ -44,7 +44,16 @@ function Mentors() {
       });
   }, [token]);
 
-  // Save a mentor to favorites
+  function becomeMentor() {
+    if (!token) {
+      alert("Please login to become a mentor");
+      navigate("/login");
+      return;
+    }
+
+    navigate("/mentor-dashboard");
+  }
+
   function addFavorite(mentor) {
     if (!token) {
       alert("Please login to save favorites!");
@@ -74,9 +83,9 @@ function Mentors() {
       });
   }
 
-  // Search GitHub when form is submitted
   function handleSearch(e) {
     e.preventDefault();
+
     if (search.trim()) {
       setQuery(search);
     }
@@ -93,6 +102,10 @@ function Mentors() {
           <p className="page-text">
             Search real GitHub developers by name, username, or bio.
           </p>
+
+          <button className="become-mentor-btn" onClick={becomeMentor}>
+            Become a Hustle Mentor
+          </button>
         </div>
 
         <form className="mentor-search" onSubmit={handleSearch}>
@@ -102,6 +115,7 @@ function Mentors() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+
           <button type="submit">Search</button>
         </form>
 
@@ -114,23 +128,29 @@ function Mentors() {
             return (
               <div key={mentor.id} className="mentor-card">
                 <img src={mentor.avatar_url} alt={mentor.login} />
+
                 <h3>{mentor.name || mentor.login}</h3>
+
                 <p className="mentor-username">@{mentor.login}</p>
+
                 <p className="mentor-bio">
                   {mentor.bio || "This mentor has no bio yet."}
                 </p>
+
                 <div className="mentor-info">
                   <span>Repos: {mentor.public_repos}</span>
                   <span>Followers: {mentor.followers}</span>
                 </div>
+
                 <div className="mentor-card-buttons">
                   <Link to={`/mentors/${mentor.login}`}>View Profile</Link>
+
                   <button
                     className="favorite-btn"
                     onClick={() => addFavorite(mentor)}
                     disabled={!!isSaved}
                   >
-                    {isSaved ? " Saved" : "Save Favorite"}
+                    {isSaved ? "Saved" : "Save Favorite"}
                   </button>
                 </div>
               </div>
@@ -138,9 +158,7 @@ function Mentors() {
           })}
         </div>
 
-        {mentors.length === 0 && (
-          <p className="empty-text">No mentors found.</p>
-        )}
+        {mentors.length === 0 && <p className="empty-text">No mentors found.</p>}
       </div>
     </section>
   );
