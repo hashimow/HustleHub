@@ -30,7 +30,7 @@ function Navbar() {
         <NavLink to="/">
           Home
         </NavLink>
-        
+
         <NavLink to="/hustle-mentors">
           Hustle Mentors
         </NavLink>
@@ -46,6 +46,12 @@ function Navbar() {
         <NavLink to="/favorites">
           Favorites
         </NavLink>
+
+        {user?.role === "admin" && (
+          <NavLink to="/admin">
+            Admin
+          </NavLink>
+        )}
 
       </div>
 
