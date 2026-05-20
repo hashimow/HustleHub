@@ -1,4 +1,4 @@
-const API = "https://hustlehub-backend-qgtq.onrender.com/";
+const API = "https://hustlehub-backend-qgtq.onrender.com";
 
 export default API;
 
